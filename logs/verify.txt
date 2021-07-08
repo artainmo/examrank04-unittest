@@ -1,0 +1,200 @@
+
+****************************************
+command:
+";" /bin/cat microshell.h ";" /bin/cat microshell.h "|" /usr/bin/grep a "|" /usr/bin/grep b "|" /usr/bin/grep z ";" /bin/cat microshell.h
+
+****************************************
+==========output==========
+YOU:
+#ifndef MICROSHELL_H
+#define MICROSHELL_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+
+#include <errno.h>
+
+int ft_strlen(char *a);
+int ft_strlen2(char **a);
+char *ft_strdup(char *a);
+//char *ft_strjoin(char *a, char *b);
+
+void launch_cmd(char ***cmds, int i, char **env);
+
+#endif
+#ifndef MICROSHELL_H
+#define MICROSHELL_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+
+#include <errno.h>
+
+int ft_strlen(char *a);
+int ft_strlen2(char **a);
+char *ft_strdup(char *a);
+//char *ft_strjoin(char *a, char *b);
+
+void launch_cmd(char ***cmds, int i, char **env);
+
+#endif
+
+
+****************************************
+command:
+blah "|" /bin/echo OK
+
+****************************************
+==========output==========
+YOU:
+error: cannot execute blah
+OK
+
+
+****************************************
+command:
+blah "|" /bin/echo OK ";"
+
+****************************************
+==========output==========
+YOU:
+error: cannot execute blah
+OK
+
+
+****************************************
+command:
+/bin/ls ";" cd ../.. ";" /bin/ls -la
+
+****************************************
+==========output==========
+YOU:
+microshell.a
+microshell.c
+microshell.h
+utils.c
+total 16
+drwxr-xr-x@ 7 arthurtainmont  staff   224 Jul  8 14:44 .
+drwx------@ 6 arthurtainmont  staff   192 Jul  8 14:44 ..
+-rw-r--r--@ 1 arthurtainmont  staff  6148 Jul  8 00:33 .DS_Store
+drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 14:44 examrank04
+drwxr-xr-x@ 3 arthurtainmont  staff    96 Jul  8 14:27 examrank04copy
+drwxr-xr-x@ 5 arthurtainmont  staff   160 May 15 12:16 other_proj
+drwxr-xr-x@ 4 arthurtainmont  staff   128 Jun 22 15:13 total_perspective_vortex
+
+
+****************************************
+command:
+cd
+
+****************************************
+==========output==========
+YOU:
+error: cd: bad arguments
+
+
+****************************************
+command:
+cd .. t
+
+****************************************
+==========output==========
+YOU:
+error: cd: bad arguments
+
+
+****************************************
+command:
+cd t
+
+****************************************
+==========output==========
+YOU:
+error: cd: cannot change directory to t
+
+
+****************************************
+command:
+/bin/dwdw
+
+****************************************
+==========output==========
+YOU:
+error: cannot execute /bin/dwdw
+
+
+****************************************
+command:
+/bin/dwdw "|" /bin/echo yes
+
+****************************************
+==========output==========
+YOU:
+error: cannot execute /bin/dwdw
+yes
+
+
+****************************************
+command:
+";"
+
+****************************************
+==========output==========
+YOU:
+
+
+****************************************
+command:
+";" ";"
+
+****************************************
+==========output==========
+YOU:
+
+
+****************************************
+command:
+";" ";" /bin/echo ";" ";" ";" /bin/echo yes
+
+****************************************
+==========output==========
+YOU:
+
+yes
+
+
+****************************************
+command:
+";" ";" /bin/echo OK
+
+****************************************
+==========output==========
+YOU:
+OK
+
+
+****************************************
+command:
+";" ";" /bin/echo OK ";"
+
+****************************************
+==========output==========
+YOU:
+OK
+
+
+****************************************
+command:
+";" ";" /bin/echo OK ";" ";"
+
+****************************************
+==========output==========
+YOU:
+OK
+
