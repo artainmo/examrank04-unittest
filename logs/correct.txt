@@ -448,8 +448,6 @@ YOU:
 #include <sys/wait.h>
 #include <string.h>
 
-#include <errno.h>
-
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
@@ -471,8 +469,6 @@ BASH:
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
-
-#include <errno.h>
 
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
@@ -1119,8 +1115,6 @@ YOU:
 #include <sys/wait.h>
 #include <string.h>
 
-#include <errno.h>
-
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
@@ -1139,8 +1133,6 @@ BASH:
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
-
-#include <errno.h>
 
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
@@ -1168,8 +1160,6 @@ YOU:
 #include <sys/wait.h>
 #include <string.h>
 
-#include <errno.h>
-
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
@@ -1189,8 +1179,6 @@ BASH:
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
-
-#include <errno.h>
 
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
@@ -1218,8 +1206,6 @@ YOU:
 #include <sys/wait.h>
 #include <string.h>
 
-#include <errno.h>
-
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
@@ -1239,8 +1225,6 @@ BASH:
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
-
-#include <errno.h>
 
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
@@ -1267,8 +1251,6 @@ YOU:
 #include <sys/wait.h>
 #include <string.h>
 
-#include <errno.h>
-
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
@@ -1285,8 +1267,6 @@ void launch_cmd(char ***cmds, int i, char **env);
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
-
-#include <errno.h>
 
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
@@ -1307,8 +1287,6 @@ BASH:
 #include <sys/wait.h>
 #include <string.h>
 
-#include <errno.h>
-
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
@@ -1325,8 +1303,6 @@ void launch_cmd(char ***cmds, int i, char **env);
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
-
-#include <errno.h>
 
 int ft_strlen(char *a);
 int ft_strlen2(char **a);

@@ -7,8 +7,6 @@
 #include <sys/wait.h>
 #include <string.h>
 
-#include <errno.h>
-
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
