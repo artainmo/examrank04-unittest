@@ -8,14 +8,10 @@ command:
 YOU:
 microshell.a
 microshell.c
-microshell.h
-utils.c
 
 BASH:
 microshell.a
 microshell.c
-microshell.h
-utils.c
 
 ****************************************
 command:
@@ -46,13 +42,43 @@ command:
 ****************************************
 ==========output==========
 YOU:
-#include "microshell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
 
-void ft_cd(char **cmd)
+void launch_cmd(char ***cmds, int i, char **env);
+
+
+void ft_fatal_error()
+{
+          write(2, "error: fatal\n", 13);
+          exit(EXIT_FAILURE); //Only EXIT_FAILURE is the standard value for returning unsuccessful termination, but 1 is used for the same in many implementations.
+ }
+
+int ft_strlen2(char **a)
 {
 	int i;
 
 	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+int ft_strlen(char *a)
+{
+	int i;
+
+	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+void ft_cd(char **cmd)
+{
 	if (ft_strlen2(cmd) != 2)
 		write(2, "error: cd: bad arguments\n", 25);
 	else
@@ -195,7 +221,7 @@ void parsing(int argc, char **argv, char ***cmds)
 			l++;
 			if ((cmds[l] = malloc(sizeof(char *) + 1)) == 0)
 				ft_fatal_error();
-			cmds[l][0] = ft_strdup(argv[i]);
+			cmds[l][0] = argv[i];
 			cmds[l][1] = 0;
 			l++;
 			m = 0;
@@ -204,7 +230,7 @@ void parsing(int argc, char **argv, char ***cmds)
 		}
 		else
 		{	
-			cmds[l][m] = ft_strdup(argv[i]);
+			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
 		}
@@ -233,13 +259,43 @@ int main(int argc, char **argv, char **env)
 }
 
 BASH:
-#include "microshell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
 
-void ft_cd(char **cmd)
+void launch_cmd(char ***cmds, int i, char **env);
+
+
+void ft_fatal_error()
+{
+          write(2, "error: fatal\n", 13);
+          exit(EXIT_FAILURE); //Only EXIT_FAILURE is the standard value for returning unsuccessful termination, but 1 is used for the same in many implementations.
+ }
+
+int ft_strlen2(char **a)
 {
 	int i;
 
 	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+int ft_strlen(char *a)
+{
+	int i;
+
+	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+void ft_cd(char **cmd)
+{
 	if (ft_strlen2(cmd) != 2)
 		write(2, "error: cd: bad arguments\n", 25);
 	else
@@ -382,7 +438,7 @@ void parsing(int argc, char **argv, char ***cmds)
 			l++;
 			if ((cmds[l] = malloc(sizeof(char *) + 1)) == 0)
 				ft_fatal_error();
-			cmds[l][0] = ft_strdup(argv[i]);
+			cmds[l][0] = argv[i];
 			cmds[l][1] = 0;
 			l++;
 			m = 0;
@@ -391,7 +447,7 @@ void parsing(int argc, char **argv, char ***cmds)
 		}
 		else
 		{	
-			cmds[l][m] = ft_strdup(argv[i]);
+			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
 		}
@@ -438,47 +494,13 @@ command:
 ****************************************
 ==========output==========
 YOU:
+cat: microshell.h: No such file or directory
 /Users/arthurtainmont/Documents/programming/examrank04_unittest/microshell
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
-microshell.h
 i love my microshell
 
 BASH:
+cat: microshell.h: No such file or directory
 /Users/arthurtainmont/Documents/programming/examrank04_unittest/microshell
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
-microshell.h
 i love my microshell
 
 ****************************************
@@ -488,12 +510,10 @@ command:
 ****************************************
 ==========output==========
 YOU:
-microshell.h
 pppp
 d
 
 BASH:
-microshell.h
 pppp
 d
 
@@ -504,11 +524,9 @@ command:
 ****************************************
 ==========output==========
 YOU:
-microshell.h
 i love my microshell
 
 BASH:
-microshell.h
 i love my microshell
 
 ****************************************
@@ -518,13 +536,43 @@ command:
 ****************************************
 ==========output==========
 YOU:
-#include "microshell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
 
-void ft_cd(char **cmd)
+void launch_cmd(char ***cmds, int i, char **env);
+
+
+void ft_fatal_error()
+{
+          write(2, "error: fatal\n", 13);
+          exit(EXIT_FAILURE); //Only EXIT_FAILURE is the standard value for returning unsuccessful termination, but 1 is used for the same in many implementations.
+ }
+
+int ft_strlen2(char **a)
 {
 	int i;
 
 	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+int ft_strlen(char *a)
+{
+	int i;
+
+	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+void ft_cd(char **cmd)
+{
 	if (ft_strlen2(cmd) != 2)
 		write(2, "error: cd: bad arguments\n", 25);
 	else
@@ -667,7 +715,7 @@ void parsing(int argc, char **argv, char ***cmds)
 			l++;
 			if ((cmds[l] = malloc(sizeof(char *) + 1)) == 0)
 				ft_fatal_error();
-			cmds[l][0] = ft_strdup(argv[i]);
+			cmds[l][0] = argv[i];
 			cmds[l][1] = 0;
 			l++;
 			m = 0;
@@ -676,7 +724,7 @@ void parsing(int argc, char **argv, char ***cmds)
 		}
 		else
 		{	
-			cmds[l][m] = ft_strdup(argv[i]);
+			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
 		}
@@ -705,17 +753,46 @@ int main(int argc, char **argv, char **env)
 }
 microshell.a
 microshell.c
-microshell.h
 i love my microshell
 
 BASH:
-#include "microshell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
 
-void ft_cd(char **cmd)
+void launch_cmd(char ***cmds, int i, char **env);
+
+
+void ft_fatal_error()
+{
+          write(2, "error: fatal\n", 13);
+          exit(EXIT_FAILURE); //Only EXIT_FAILURE is the standard value for returning unsuccessful termination, but 1 is used for the same in many implementations.
+ }
+
+int ft_strlen2(char **a)
 {
 	int i;
 
 	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+int ft_strlen(char *a)
+{
+	int i;
+
+	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+void ft_cd(char **cmd)
+{
 	if (ft_strlen2(cmd) != 2)
 		write(2, "error: cd: bad arguments\n", 25);
 	else
@@ -858,7 +935,7 @@ void parsing(int argc, char **argv, char ***cmds)
 			l++;
 			if ((cmds[l] = malloc(sizeof(char *) + 1)) == 0)
 				ft_fatal_error();
-			cmds[l][0] = ft_strdup(argv[i]);
+			cmds[l][0] = argv[i];
 			cmds[l][1] = 0;
 			l++;
 			m = 0;
@@ -867,7 +944,7 @@ void parsing(int argc, char **argv, char ***cmds)
 		}
 		else
 		{	
-			cmds[l][m] = ft_strdup(argv[i]);
+			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
 		}
@@ -896,7 +973,6 @@ int main(int argc, char **argv, char **env)
 }
 microshell.a
 microshell.c
-microshell.h
 i love my microshell
 
 ****************************************
@@ -908,15 +984,11 @@ command:
 YOU:
 microshell.a
 microshell.c
-microshell.h
-utils.c
 i love my microshell
 
 BASH:
 microshell.a
 microshell.c
-microshell.h
-utils.c
 i love my microshell
 
 ****************************************
@@ -928,12 +1000,10 @@ command:
 YOU:
 microshell.a
 microshell.c
-microshell.h
 
 BASH:
 microshell.a
 microshell.c
-microshell.h
 
 ****************************************
 command:
@@ -944,12 +1014,10 @@ command:
 YOU:
 microshell.a
 microshell.c
-microshell.h
 
 BASH:
 microshell.a
 microshell.c
-microshell.h
 
 ****************************************
 command:
@@ -960,12 +1028,10 @@ command:
 YOU:
 microshell.a
 microshell.c
-microshell.h
 
 BASH:
 microshell.a
 microshell.c
-microshell.h
 
 ****************************************
 command:
@@ -976,12 +1042,10 @@ command:
 YOU:
 microshell.a
 microshell.c
-microshell.h
 
 BASH:
 microshell.a
 microshell.c
-microshell.h
 
 ****************************************
 command:
@@ -1008,14 +1072,12 @@ command:
 YOU:
      1	microshell.a
      2	microshell.c
-     3	microshell.h
 dernier
 ftest
 
 BASH:
      1	microshell.a
      2	microshell.c
-     3	microshell.h
 dernier
 ftest
 
@@ -1048,22 +1110,18 @@ command:
 YOU:
 ls: ftest: No such file or directory
 ls: werwer: No such file or directory
+ls: microshell.h: No such file or directory
 microshell.a
 microshell.c
-microshell.h
-utils.c
 microshell.c
-microshell.h
 
 BASH:
 ls: ftest: No such file or directory
 ls: werwer: No such file or directory
+ls: microshell.h: No such file or directory
 microshell.a
 microshell.c
-microshell.h
-utils.c
 microshell.c
-microshell.h
 
 ****************************************
 command:
@@ -1074,30 +1132,22 @@ command:
 YOU:
 microshell.a
 microshell.c
-microshell.h
 microshell.a
 microshell.c
-microshell.h
 microshell.a
 microshell.c
-microshell.h
 microshell.a
 microshell.c
-microshell.h
 
 BASH:
 microshell.a
 microshell.c
-microshell.h
 microshell.a
 microshell.c
-microshell.h
 microshell.a
 microshell.c
-microshell.h
 microshell.a
 microshell.c
-microshell.h
 
 ****************************************
 command:
@@ -1106,42 +1156,12 @@ command:
 ****************************************
 ==========output==========
 YOU:
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
 
 BASH:
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
 
 ****************************************
 command:
@@ -1150,44 +1170,12 @@ command:
 ****************************************
 ==========output==========
 YOU:
-#include <sys/wait.h>
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
 
 BASH:
-#include <sys/wait.h>
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
 
 ****************************************
 command:
@@ -1196,44 +1184,12 @@ command:
 ****************************************
 ==========output==========
 YOU:
-#include <sys/wait.h>
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
 
 BASH:
-#include <sys/wait.h>
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
 
 ****************************************
 command:
@@ -1242,73 +1198,11 @@ command:
 ****************************************
 ==========output==========
 YOU:
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
 
 BASH:
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
-#ifndef MICROSHELL_H
-#define MICROSHELL_H
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <string.h>
-
-int ft_strlen(char *a);
-int ft_strlen2(char **a);
-char *ft_strdup(char *a);
-void ft_fatal_error();
-
-void launch_cmd(char ***cmds, int i, char **env);
-
-#endif
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory
+cat: microshell.h: No such file or directory

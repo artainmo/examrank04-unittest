@@ -1,10 +1,40 @@
-#include "microshell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
 
-void ft_cd(char **cmd)
+void launch_cmd(char ***cmds, int i, char **env);
+
+
+void ft_fatal_error()
+{
+          write(2, "error: fatal\n", 13);
+          exit(EXIT_FAILURE); //Only EXIT_FAILURE is the standard value for returning unsuccessful termination, but 1 is used for the same in many implementations.
+ }
+
+int ft_strlen2(char **a)
 {
 	int i;
 
 	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+int ft_strlen(char *a)
+{
+	int i;
+
+	i = 0;
+	while(a[i])
+		i++;
+	return (i);
+}
+
+void ft_cd(char **cmd)
+{
 	if (ft_strlen2(cmd) != 2)
 		write(2, "error: cd: bad arguments\n", 25);
 	else
@@ -147,7 +177,7 @@ void parsing(int argc, char **argv, char ***cmds)
 			l++;
 			if ((cmds[l] = malloc(sizeof(char *) + 1)) == 0)
 				ft_fatal_error();
-			cmds[l][0] = ft_strdup(argv[i]);
+			cmds[l][0] = argv[i];
 			cmds[l][1] = 0;
 			l++;
 			m = 0;
@@ -156,7 +186,7 @@ void parsing(int argc, char **argv, char ***cmds)
 		}
 		else
 		{	
-			cmds[l][m] = ft_strdup(argv[i]);
+			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
 		}
