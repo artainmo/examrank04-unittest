@@ -155,7 +155,7 @@ void parsing(int argc, char **argv, char ***cmds)
 	i = 1;
 	l = 0;
 	m = 0;
-	if ((cmds[0] = malloc(sizeof(char *) * argc)) == 0)
+	if ((cmds[0] = malloc(sizeof(char *) * argc + 1)) == 0)
 		ft_fatal_error();
 	while (i < argc)
 	{	
@@ -168,20 +168,20 @@ void parsing(int argc, char **argv, char ***cmds)
 			cmds[l][m] = 0;
 			l++;
 			m = 0;
-			if ((cmds[l] = malloc(sizeof(char *) * argc)) == 0)
+			if ((cmds[l] = malloc(sizeof(char *) * argc + 1)) == 0)
 				ft_fatal_error();
 		}
 		else if (strcmp(argv[i], "|") == 0)
 		{
 			cmds[l][m] = 0;
 			l++;
-			if ((cmds[l] = malloc(sizeof(char *) + 1)) == 0)
+			if ((cmds[l] = malloc(sizeof(char *) * argc + 1)) == 0)
 				ft_fatal_error();
 			cmds[l][0] = argv[i];
 			cmds[l][1] = 0;
 			l++;
 			m = 0;
-			if ((cmds[l] = malloc(sizeof(char *) * argc)) == 0)
+			if ((cmds[l] = malloc(sizeof(char *) * argc + 1)) == 0)
 				ft_fatal_error();
 		}
 		else

@@ -43,10 +43,10 @@ YOU:
 microshell.a
 microshell.c
 total 16
-drwxr-xr-x@ 6 arthurtainmont  staff   192 Jul  8 17:34 .
-drwx------@ 6 arthurtainmont  staff   192 Jul  8 17:34 ..
+drwxr-xr-x@ 6 arthurtainmont  staff   192 Jul  8 17:46 .
+drwx------@ 6 arthurtainmont  staff   192 Jul  8 17:46 ..
 -rw-r--r--@ 1 arthurtainmont  staff  6148 Jul  8 16:33 .DS_Store
-drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 17:34 examrank04_unittest
+drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 17:46 examrank04_unittest
 drwxr-xr-x@ 5 arthurtainmont  staff   160 May 15 12:16 other_proj
 drwxr-xr-x@ 4 arthurtainmont  staff   128 Jun 22 15:13 total_perspective_vortex
 
