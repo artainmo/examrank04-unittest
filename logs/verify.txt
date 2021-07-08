@@ -80,11 +80,11 @@ microshell.c
 microshell.h
 utils.c
 total 16
-drwxr-xr-x@ 7 arthurtainmont  staff   224 Jul  8 14:44 .
-drwx------@ 6 arthurtainmont  staff   192 Jul  8 14:44 ..
--rw-r--r--@ 1 arthurtainmont  staff  6148 Jul  8 00:33 .DS_Store
-drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 14:44 examrank04
-drwxr-xr-x@ 3 arthurtainmont  staff    96 Jul  8 14:27 examrank04copy
+drwxr-xr-x@ 7 arthurtainmont  staff   224 Jul  8 14:51 .
+drwx------@ 6 arthurtainmont  staff   192 Jul  8 14:51 ..
+-rw-r--r--@ 1 arthurtainmont  staff  6148 Jul  8 14:50 .DS_Store
+drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 14:51 examrank04
+drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 14:51 examrank04 copy
 drwxr-xr-x@ 5 arthurtainmont  staff   160 May 15 12:16 other_proj
 drwxr-xr-x@ 4 arthurtainmont  staff   128 Jun 22 15:13 total_perspective_vortex
 
