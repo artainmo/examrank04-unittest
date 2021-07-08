@@ -1,5 +1,11 @@
 #include "microshell.h"
 
+void ft_fatal_error()
+{
+          write(2, "error: fatal\n", 13);
+          exit(EXIT_FAILURE); //Only EXIT_FAILURE is the standard value for returning unsuccessful termination, but 1 is used for the same in many implementations.
+ }
+
 int ft_strlen(char *a)
 {
       int i;
@@ -29,7 +35,7 @@ char *ft_strdup(char *a)
 	if (a == 0)
 		return (0);
 	if ((cpy = malloc(sizeof(char) * ft_strlen(a) + 1)) == 0)
-		return (0);
+		ft_fatal_error();
 	while (a[i] != 0)
 	{
 		cpy[i] = a[i];
@@ -38,28 +44,3 @@ char *ft_strdup(char *a)
 	cpy[i] = 0;
 	return (cpy);
 }
-
-/*
-char *ft_strjoin(char *a, char *b)
-{
-	int i;
-	int n;
-	char *ret;
-
-	i = 0;
-	n = 0;
-	ret = malloc(ft_strlen(a) + ft_strlen(b) + 1);
-	while(a[i])
-	{
-		ret[i] = a[i];
-		i++;
-	}
-	while(b[n])
-	{
-		ret[i] = b[n];
-	  	i++;
-		n++;
-	}
-	ret[i] = 0;
-	return (ret);
-}*/

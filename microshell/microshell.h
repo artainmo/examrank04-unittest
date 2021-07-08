@@ -12,7 +12,7 @@
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
-//char *ft_strjoin(char *a, char *b);
+void ft_fatal_error();
 
 void launch_cmd(char ***cmds, int i, char **env);
 

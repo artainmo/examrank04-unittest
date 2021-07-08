@@ -20,7 +20,7 @@ YOU:
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
-//char *ft_strjoin(char *a, char *b);
+void ft_fatal_error();
 
 void launch_cmd(char ***cmds, int i, char **env);
 
@@ -39,7 +39,7 @@ void launch_cmd(char ***cmds, int i, char **env);
 int ft_strlen(char *a);
 int ft_strlen2(char **a);
 char *ft_strdup(char *a);
-//char *ft_strjoin(char *a, char *b);
+void ft_fatal_error();
 
 void launch_cmd(char ***cmds, int i, char **env);
 
@@ -80,13 +80,12 @@ microshell.c
 microshell.h
 utils.c
 total 16
-drwxr-xr-x@ 7 arthurtainmont  staff   224 Jul  8 14:51 .
-drwx------@ 6 arthurtainmont  staff   192 Jul  8 14:51 ..
--rw-r--r--@ 1 arthurtainmont  staff  6148 Jul  8 14:50 .DS_Store
-drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 14:51 examrank04
-drwxr-xr-x@ 9 arthurtainmont  staff   288 Jul  8 14:51 examrank04 copy
-drwxr-xr-x@ 5 arthurtainmont  staff   160 May 15 12:16 other_proj
-drwxr-xr-x@ 4 arthurtainmont  staff   128 Jun 22 15:13 total_perspective_vortex
+drwxr-xr-x@  6 arthurtainmont  staff   192 Jul  8 16:35 .
+drwx------@  6 arthurtainmont  staff   192 Jul  8 16:35 ..
+-rw-r--r--@  1 arthurtainmont  staff  6148 Jul  8 16:33 .DS_Store
+drwxr-xr-x@ 10 arthurtainmont  staff   320 Jul  8 16:35 examrank04_unittest
+drwxr-xr-x@  5 arthurtainmont  staff   160 May 15 12:16 other_proj
+drwxr-xr-x@  4 arthurtainmont  staff   128 Jun 22 15:13 total_perspective_vortex
 
 
 ****************************************
