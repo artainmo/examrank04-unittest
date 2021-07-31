@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include <string.h>
 
-void launch_cmd(char ***cmds, int i, char **env);
+void launch_cmd(char ***cmds, int i, char **env, int *fd);
 
 
 void ft_fatal_error()
@@ -68,12 +68,9 @@ void ft_exec(char **cmd, char **env)
 		ft_fatal_error();
 }
 
-void ft_pipe(char ***cmd, int i, char **env)
+void ft_pipe(char ***cmd, int i, char **env, int *fd)
 {
-	pid_t pid;
-	int fd[2];
-	int fd1;
-	int fd0;
+  pid_t pid;
 
 	if (pipe(fd) == -1)
 		ft_fatal_error();
@@ -81,16 +78,12 @@ void ft_pipe(char ***cmd, int i, char **env)
 		ft_fatal_error();
 	if (!pid)
 	{
-		if ((fd1 = dup(1)) == -1)
-			ft_fatal_error();
 		if (close(fd[0]) == -1)
 			ft_fatal_error();
 		if (dup2(fd[1], 1) == -1)
 			ft_fatal_error();
 		ft_exec(cmd[i], env);
-		if (dup2(1, fd1) == -1)
-			ft_fatal_error();
-		if (close(fd1) == -1)
+		if (dup2(1, fd[1]) == -1)
 			ft_fatal_error();
 		if (close(fd[1]) == -1)
 			ft_fatal_error();
@@ -100,27 +93,24 @@ void ft_pipe(char ***cmd, int i, char **env)
 	{
 		if (waitpid(pid, 0, 0) == -1)
 			ft_fatal_error();
-		if ((fd0 = dup(0)) == -1)
-			ft_fatal_error();
 		if (close(fd[1]) == -1)
 			ft_fatal_error();
 		if (dup2(fd[0], 0) == -1)
 			ft_fatal_error();
-		launch_cmd(cmd, i + 2, env);
-		if (dup2(0, fd0) == -1)
-			ft_fatal_error();
-		if (close(fd0) == -1)
-			ft_fatal_error();
-		if (close(fd[0]) == -1)
+		launch_cmd(cmd, i + 2, env, fd);
+		if (dup2(0, fd[0]) == -1)
 			ft_fatal_error();
 	}
 }
 
-void launch_cmd(char ***cmds, int i, char **env)
+void launch_cmd(char ***cmds, int i, char **env, int *fd)
 {
 	//printf("{%s %s}\n", cmds[i][0], cmds[i][1]);
 	if (cmds[i + 1] != 0 && strcmp(cmds[i + 1][0], "|") == 0)
-		ft_pipe(cmds, i,  env);
+  {
+    close(fd[0]);
+		ft_pipe(cmds, i,  env, fd);
+  }
 	else if (strcmp(cmds[i][0], "cd") == 0)
 		ft_cd(cmds[i]);
 	else
@@ -130,6 +120,7 @@ void launch_cmd(char ***cmds, int i, char **env)
 void launch_cmds(char ***cmds, char **env)
 {
 	int i;
+  int fd[2];
 
 	i = 0;
 	while (cmds[i])
@@ -141,7 +132,7 @@ void launch_cmds(char ***cmds, char **env)
 			if (!cmds[i])
 				break ;
 		}
-		launch_cmd(cmds, i, env);
+		launch_cmd(cmds, i, env, fd);
 		i++;
 	}
 }
@@ -158,7 +149,7 @@ void parsing(int argc, char **argv, char ***cmds)
 	if ((cmds[0] = malloc(sizeof(char *) * argc + 1)) == 0)
 		ft_fatal_error();
 	while (i < argc)
-	{	
+	{
 		if (i == argc - 1 && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
 			break ;
 		else if (m == 0 && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
@@ -185,7 +176,7 @@ void parsing(int argc, char **argv, char ***cmds)
 				ft_fatal_error();
 		}
 		else
-		{	
+		{
 			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
@@ -198,7 +189,7 @@ void parsing(int argc, char **argv, char ***cmds)
 	{
 		cmds[l][m] = 0;
 		cmds[l + 1] = 0;
-	}	
+	}
 }
 
 int main(int argc, char **argv, char **env)

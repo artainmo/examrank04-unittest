@@ -1,6 +1,6 @@
 all: fclean
 	@gcc -Wall -Wextra -Werror microshell/*.c -o microshell/microshell.a
-	@python3 tester/main.py
+	@ulimit -n 30 ; python3 tester/main.py
 
 clean:
 	@rm -rf microshell/*.o

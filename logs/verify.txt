@@ -12,7 +12,7 @@ YOU:
 #include <sys/wait.h>
 #include <string.h>
 
-void launch_cmd(char ***cmds, int i, char **env);
+void launch_cmd(char ***cmds, int i, char **env, int *fd);
 
 
 void ft_fatal_error()
@@ -76,12 +76,9 @@ void ft_exec(char **cmd, char **env)
 		ft_fatal_error();
 }
 
-void ft_pipe(char ***cmd, int i, char **env)
+void ft_pipe(char ***cmd, int i, char **env, int *fd)
 {
-	pid_t pid;
-	int fd[2];
-	int fd1;
-	int fd0;
+  pid_t pid;
 
 	if (pipe(fd) == -1)
 		ft_fatal_error();
@@ -89,16 +86,12 @@ void ft_pipe(char ***cmd, int i, char **env)
 		ft_fatal_error();
 	if (!pid)
 	{
-		if ((fd1 = dup(1)) == -1)
-			ft_fatal_error();
 		if (close(fd[0]) == -1)
 			ft_fatal_error();
 		if (dup2(fd[1], 1) == -1)
 			ft_fatal_error();
 		ft_exec(cmd[i], env);
-		if (dup2(1, fd1) == -1)
-			ft_fatal_error();
-		if (close(fd1) == -1)
+		if (dup2(1, fd[1]) == -1)
 			ft_fatal_error();
 		if (close(fd[1]) == -1)
 			ft_fatal_error();
@@ -108,27 +101,24 @@ void ft_pipe(char ***cmd, int i, char **env)
 	{
 		if (waitpid(pid, 0, 0) == -1)
 			ft_fatal_error();
-		if ((fd0 = dup(0)) == -1)
-			ft_fatal_error();
 		if (close(fd[1]) == -1)
 			ft_fatal_error();
 		if (dup2(fd[0], 0) == -1)
 			ft_fatal_error();
-		launch_cmd(cmd, i + 2, env);
-		if (dup2(0, fd0) == -1)
-			ft_fatal_error();
-		if (close(fd0) == -1)
-			ft_fatal_error();
-		if (close(fd[0]) == -1)
+		launch_cmd(cmd, i + 2, env, fd);
+		if (dup2(0, fd[0]) == -1)
 			ft_fatal_error();
 	}
 }
 
-void launch_cmd(char ***cmds, int i, char **env)
+void launch_cmd(char ***cmds, int i, char **env, int *fd)
 {
 	//printf("{%s %s}\n", cmds[i][0], cmds[i][1]);
 	if (cmds[i + 1] != 0 && strcmp(cmds[i + 1][0], "|") == 0)
-		ft_pipe(cmds, i,  env);
+  {
+    close(fd[0]);
+		ft_pipe(cmds, i,  env, fd);
+  }
 	else if (strcmp(cmds[i][0], "cd") == 0)
 		ft_cd(cmds[i]);
 	else
@@ -138,6 +128,7 @@ void launch_cmd(char ***cmds, int i, char **env)
 void launch_cmds(char ***cmds, char **env)
 {
 	int i;
+  int fd[2];
 
 	i = 0;
 	while (cmds[i])
@@ -149,7 +140,7 @@ void launch_cmds(char ***cmds, char **env)
 			if (!cmds[i])
 				break ;
 		}
-		launch_cmd(cmds, i, env);
+		launch_cmd(cmds, i, env, fd);
 		i++;
 	}
 }
@@ -166,7 +157,7 @@ void parsing(int argc, char **argv, char ***cmds)
 	if ((cmds[0] = malloc(sizeof(char *) * argc + 1)) == 0)
 		ft_fatal_error();
 	while (i < argc)
-	{	
+	{
 		if (i == argc - 1 && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
 			break ;
 		else if (m == 0 && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
@@ -193,7 +184,7 @@ void parsing(int argc, char **argv, char ***cmds)
 				ft_fatal_error();
 		}
 		else
-		{	
+		{
 			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
@@ -206,7 +197,7 @@ void parsing(int argc, char **argv, char ***cmds)
 	{
 		cmds[l][m] = 0;
 		cmds[l + 1] = 0;
-	}	
+	}
 }
 
 int main(int argc, char **argv, char **env)
@@ -227,7 +218,7 @@ int main(int argc, char **argv, char **env)
 #include <sys/wait.h>
 #include <string.h>
 
-void launch_cmd(char ***cmds, int i, char **env);
+void launch_cmd(char ***cmds, int i, char **env, int *fd);
 
 
 void ft_fatal_error()
@@ -291,12 +282,9 @@ void ft_exec(char **cmd, char **env)
 		ft_fatal_error();
 }
 
-void ft_pipe(char ***cmd, int i, char **env)
+void ft_pipe(char ***cmd, int i, char **env, int *fd)
 {
-	pid_t pid;
-	int fd[2];
-	int fd1;
-	int fd0;
+  pid_t pid;
 
 	if (pipe(fd) == -1)
 		ft_fatal_error();
@@ -304,16 +292,12 @@ void ft_pipe(char ***cmd, int i, char **env)
 		ft_fatal_error();
 	if (!pid)
 	{
-		if ((fd1 = dup(1)) == -1)
-			ft_fatal_error();
 		if (close(fd[0]) == -1)
 			ft_fatal_error();
 		if (dup2(fd[1], 1) == -1)
 			ft_fatal_error();
 		ft_exec(cmd[i], env);
-		if (dup2(1, fd1) == -1)
-			ft_fatal_error();
-		if (close(fd1) == -1)
+		if (dup2(1, fd[1]) == -1)
 			ft_fatal_error();
 		if (close(fd[1]) == -1)
 			ft_fatal_error();
@@ -323,27 +307,24 @@ void ft_pipe(char ***cmd, int i, char **env)
 	{
 		if (waitpid(pid, 0, 0) == -1)
 			ft_fatal_error();
-		if ((fd0 = dup(0)) == -1)
-			ft_fatal_error();
 		if (close(fd[1]) == -1)
 			ft_fatal_error();
 		if (dup2(fd[0], 0) == -1)
 			ft_fatal_error();
-		launch_cmd(cmd, i + 2, env);
-		if (dup2(0, fd0) == -1)
-			ft_fatal_error();
-		if (close(fd0) == -1)
-			ft_fatal_error();
-		if (close(fd[0]) == -1)
+		launch_cmd(cmd, i + 2, env, fd);
+		if (dup2(0, fd[0]) == -1)
 			ft_fatal_error();
 	}
 }
 
-void launch_cmd(char ***cmds, int i, char **env)
+void launch_cmd(char ***cmds, int i, char **env, int *fd)
 {
 	//printf("{%s %s}\n", cmds[i][0], cmds[i][1]);
 	if (cmds[i + 1] != 0 && strcmp(cmds[i + 1][0], "|") == 0)
-		ft_pipe(cmds, i,  env);
+  {
+    close(fd[0]);
+		ft_pipe(cmds, i,  env, fd);
+  }
 	else if (strcmp(cmds[i][0], "cd") == 0)
 		ft_cd(cmds[i]);
 	else
@@ -353,6 +334,7 @@ void launch_cmd(char ***cmds, int i, char **env)
 void launch_cmds(char ***cmds, char **env)
 {
 	int i;
+  int fd[2];
 
 	i = 0;
 	while (cmds[i])
@@ -364,7 +346,7 @@ void launch_cmds(char ***cmds, char **env)
 			if (!cmds[i])
 				break ;
 		}
-		launch_cmd(cmds, i, env);
+		launch_cmd(cmds, i, env, fd);
 		i++;
 	}
 }
@@ -381,7 +363,7 @@ void parsing(int argc, char **argv, char ***cmds)
 	if ((cmds[0] = malloc(sizeof(char *) * argc + 1)) == 0)
 		ft_fatal_error();
 	while (i < argc)
-	{	
+	{
 		if (i == argc - 1 && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
 			break ;
 		else if (m == 0 && (strcmp(argv[i], "|") == 0 || strcmp(argv[i], ";") == 0))
@@ -408,7 +390,7 @@ void parsing(int argc, char **argv, char ***cmds)
 				ft_fatal_error();
 		}
 		else
-		{	
+		{
 			cmds[l][m] = argv[i];
 			//printf("|%s|\n", cmds[l][m]);
 			m++;
@@ -421,7 +403,7 @@ void parsing(int argc, char **argv, char ***cmds)
 	{
 		cmds[l][m] = 0;
 		cmds[l + 1] = 0;
-	}	
+	}
 }
 
 int main(int argc, char **argv, char **env)
@@ -469,13 +451,18 @@ command:
 YOU:
 microshell.a
 microshell.c
-total 16
-drwxr-xr-x@  6 arthurtainmont  staff   192 Jul  8 22:48 .
-drwx------@  6 arthurtainmont  staff   192 Jul  8 22:48 ..
--rw-r--r--@  1 arthurtainmont  staff  6148 Jul  8 16:33 .DS_Store
-drwxr-xr-x@ 10 arthurtainmont  staff   320 Jul  8 22:48 examrank04_unittest
-drwxr-xr-x@  5 arthurtainmont  staff   160 May 15 12:16 other_proj
-drwxr-xr-x@  4 arthurtainmont  staff   128 Jun 22 15:13 total_perspective_vortex
+total 48
+drwxr-xr-x@ 11 arthurtainmont  staff    352 Jul 31 19:08 .
+drwx------@  6 arthurtainmont  staff    192 Jul 31 19:08 ..
+-rw-r--r--   1 arthurtainmont  staff  16384 Jul 31 18:52 .VimBashOtherCheatSheet.txt.swp
+drwxr-xr-x@  4 arthurtainmont  staff    128 Jul 29 15:50 CardGame
+-rw-r--r--@  1 arthurtainmont  staff   6130 Jul 31 11:32 VimBashOtherCheatSheet.txt
+drwxr-xr-x@  4 arthurtainmont  staff    128 Jul 30 19:13 dual-n-back
+drwxr-xr-x@  9 arthurtainmont  staff    288 Jul 31 19:08 examrank04_unittest
+drwxr-xr-x@  5 arthurtainmont  staff    160 Jul 16 21:05 examrank05
+drwxr-xr-x@  3 arthurtainmont  staff     96 Jul 31 00:03 ft_transcendence
+drwxr-xr-x@  5 arthurtainmont  staff    160 Jul 13 22:29 other_proj
+drwxr-xr-x@  4 arthurtainmont  staff    128 Jun 22 15:13 total_perspective_vortex
 
 
 ****************************************
