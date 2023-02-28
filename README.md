@@ -1,4 +1,4 @@
-### Info:
+### examrank04-unittest
 This is a unit-test written in python for 42 school's fourth exam, whereby a micro shell has to be written in C with limited functions.
 
 ### prerequisite:
