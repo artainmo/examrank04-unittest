@@ -1,5 +1,5 @@
 ### Info:
-This is a unit-test for the examrank04 microshell at 42 school.
+This is a unit-test for 42 school's fourth exam, whereby a micro shell has to be written in C with limited functions.
 
 ### prerequisite:
 * Python3
